@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { BrandMark } from "@/components/brand/BrandMark";
 import { Container } from "@/components/ui/primitives";
+import { SITE } from "@/lib/site";
 
 /*
  * Footer по ТЗ §10: категории, доставка и оплата, гарантия, Trade-in, контакты,
@@ -45,19 +45,19 @@ export function Footer() {
       <Container className="py-12">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <Link href="/" className="flex items-center gap-2.5" aria-label="Objective — на главную">
-              <BrandMark className="h-7 w-7 text-ink" />
-              <span className="text-[17px] font-extrabold tracking-tight">Objective</span>
+            <Link href="/" className="inline-flex items-baseline gap-1.5" aria-label="EVGENIY APPLE — на главную">
+              <span className="text-[17px] font-extrabold uppercase tracking-tight">Evgeniy</span>
+              <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-muted">Apple</span>
             </Link>
-            {/* TODO: заменить контакты и график на данные заказчика */}
+            {/* TODO: заменить контакты и график на данные владельца */}
             <p className="mt-4 text-sm text-muted">
-              Ул. Примерная, 12, Минск
+              {SITE.city}, ул. Примерная, 12
               <br />
               Ежедневно 10:00–20:00
             </p>
             <p className="mt-3 text-sm">
-              <a href="https://t.me/objective_demo" className="font-semibold text-accent hover:text-accent-strong">
-                Telegram
+              <a href={SITE.telegramUrl} className="font-semibold text-accent hover:text-accent-strong">
+                {SITE.telegramLabel}
               </a>
               <span className="mx-2 text-line">·</span>
               <a href="tel:+375290000000" className="font-semibold hover:text-ink">
@@ -84,7 +84,7 @@ export function Footer() {
 
         <div className="mt-10 flex flex-col gap-3 border-t border-line pt-6 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
           {/* TODO: заменить юрссылки и реквизиты на данные заказчика */}
-          <p>© 2026 Objective. Демо-прототип, цены и наличие подтверждаются менеджером.</p>
+          <p>© 2026 {SITE.name}. Демо-прототип, цены и наличие подтверждает Евгений перед покупкой.</p>
           <div className="flex gap-5">
             <Link href="/privacy" className="hover:text-ink">
               Политика конфиденциальности

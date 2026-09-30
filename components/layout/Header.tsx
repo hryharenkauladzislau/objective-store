@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { BrandMark } from "@/components/brand/BrandMark";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/primitives";
 import { cn } from "@/lib/cn";
@@ -47,9 +46,10 @@ export function Header() {
             scrolled ? "h-14" : "h-16",
           )}
         >
-          <Link href="/" className="flex items-center gap-2.5" aria-label="Objective — на главную">
-            <BrandMark className="h-7 w-7 text-ink" />
-            <span className="text-[17px] font-extrabold tracking-tight">Objective</span>
+          {/* Текстовый логотип личного бренда: EVGENIY — основной, APPLE — вторичный */}
+          <Link href="/" className="flex items-baseline gap-1.5" aria-label="EVGENIY APPLE — на главную">
+            <span className="text-[17px] font-extrabold uppercase tracking-tight">Evgeniy</span>
+            <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-muted">Apple</span>
           </Link>
 
           <nav className="hidden items-center gap-6 lg:flex" aria-label="Основная навигация">

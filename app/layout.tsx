@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { DartLoader } from "@/components/loading/DartLoader";
+import { FounderContactDock } from "@/components/founder/FounderContactDock";
 
 /*
  * TODO: заменить название, описание и контакты на данные заказчика (ТЗ §24).
@@ -16,11 +17,11 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
   title: {
-    default: "Objective — техника Apple: iPhone, Mac, iPad",
-    template: "%s — Objective",
+    default: "EVGENIY APPLE — техника Apple в Минске: iPhone, Mac, iPad",
+    template: "%s — EVGENIY APPLE",
   },
   description:
-    "Магазин техники Apple: актуальные iPhone, Mac, iPad и Watch, проверенные б/у устройства и Trade-in. Заявка менеджеру с выбранными параметрами.",
+    "Техника Apple в Минске: актуальные iPhone, Mac, iPad и Watch, проверенные б/у устройства и Trade-in. Консультация лично от Евгения — основателя магазина.",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
+        <FounderContactDock />
       </body>
     </html>
   );

@@ -1,15 +1,17 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 import { Container } from "@/components/ui/primitives";
 import { Button } from "@/components/ui/Button";
-import { ProductCard } from "@/components/catalog/ProductCard";
+import { FeaturedCarousel } from "@/components/carousel/FeaturedCarousel";
+import { FounderTrustBlock } from "@/components/founder/FounderTrustBlock";
 import { getCategories, getFeaturedProducts, getUsedUnits } from "@/lib/catalog";
 import { formatPrice } from "@/lib/catalog";
+import { SITE } from "@/lib/site";
 
 /*
- * Главная (ТЗ §8–10): первый экран с четырьмя сценариями, карусель
- * актуальных iPhone (этап 4), полоса доверия, категории, б/у, Trade-in,
- * как проходит покупка.
+ * Главная (ТЗ §8–10): первый экран с личным брендом владельца и четырьмя
+ * сценариями, карусель актуальных iPhone, полоса доверия, категории,
+ * б/у, личный блок доверия, Trade-in, как проходит покупка.
  */
 
 const SCENARIOS = [
@@ -17,32 +19,28 @@ const SCENARIOS = [
     href: "/catalog",
     title: "Купить технику",
     text: "iPhone, Mac, iPad — новые, с гарантией",
-    visual: "hero-visual-catalog" as const,
   },
   {
     href: "/trade-in",
     title: "Оценить устройство",
     text: "Trade-in: скидка за старое устройство",
-    visual: "hero-visual-tradein" as const,
   },
   {
     href: "/used",
     title: "Смотреть б/у",
     text: "Проверенные устройства с паспортом",
-    visual: "hero-visual-used" as const,
   },
   {
     href: "/contacts?topic=question",
     title: "Задать вопрос",
-    text: "Ответим в Telegram за 10 минут",
-    visual: "hero-visual-question" as const,
+    text: "Отвечает лично Евгений",
   },
 ];
 
 const TRUST = [
   { title: "Гарантия магазина", text: "6–12 месяцев на новые и б/у" },
-  { title: "Доставка сегодня", text: "По городу — в день заказа" },
-  { title: "Помощь менеджера", text: "Подбор и проверка перед покупкой" },
+  { title: "Доставка по Минску", text: "Сегодня при заказе до 18:00" },
+  { title: "Помощь Евгения", text: "Подбор и проверка перед покупкой" },
   { title: "Trade-in", text: "Оценка старого устройства в зачёт" },
 ];
 
@@ -55,7 +53,7 @@ const STEPS = [
   {
     n: "02",
     title: "Уточнение цены и наличия",
-    text: "Менеджер подтверждает актуальную цену, наличие и сроки — заявка уже содержит выбор.",
+    text: "Евгений подтверждает актуальную цену, наличие и сроки — заявка уже содержит выбор.",
   },
   {
     n: "03",
@@ -68,35 +66,35 @@ export default function HomePage() {
   const featured = getFeaturedProducts().slice(0, 8);
   const used = getUsedUnits();
   const categories = getCategories();
-  const hero = featured[0];
 
   return (
     <>
-      {/* Первый экран: асимметрия, слева смысл и сценарии, справа товар */}
-      <Container className="pb-14 pt-10 lg:pb-20 lg:pt-14">
-        <div className="grid items-center gap-10 lg:grid-cols-[1.05fr_1fr] lg:gap-14">
+      {/* Первый экран: слева смысл и сценарии, справа — фото владельца в композиции */}
+      <Container className="pb-12 pt-8 lg:pb-16 lg:pt-12">
+        <div className="grid items-center gap-8 lg:grid-cols-[1.05fr_1fr] lg:gap-12">
           <div>
-            <h1 className="text-4xl font-extrabold leading-[1.08] tracking-tight lg:text-[56px] lg:leading-[1.05]">
-              Техника Apple
-              <br />
-              с понятной покупкой
+            <p className="text-sm font-semibold text-accent">Техника Apple в {SITE.city}</p>
+            <h1 className="mt-3 text-[34px] font-extrabold leading-[1.1] tracking-tight sm:text-4xl lg:text-[52px] lg:leading-[1.05]">
+              Помогу выбрать технику, которая действительно вам подходит
             </h1>
-            <p className="mt-5 max-w-md text-[15px] leading-relaxed text-muted lg:text-base">
-              Актуальные iPhone, Mac и iPad, проверенные б/у устройства и Trade-in.
-              Вы выбираете конфигурацию — менеджер подтверждает цену и наличие.
+            <p className="mt-4 max-w-md text-[15px] leading-relaxed text-muted lg:text-base">
+              Каталог актуальных устройств, консультация перед покупкой и помощь после неё.
             </p>
 
             <div className="mt-7 flex flex-wrap gap-3">
               <Button href="/catalog" size="lg">
-                Перейти в каталог
+                Смотреть каталог
               </Button>
-              <Button href="/contacts?topic=availability" variant="secondary" size="lg">
-                Уточнить наличие
+              <Button href="/contacts?topic=question" variant="secondary" size="lg">
+                Задать вопрос Евгению
               </Button>
             </div>
+            <p className="mt-3 text-sm text-muted">
+              На связи лично — без операторов и шаблонных ответов
+            </p>
 
             {/* Четыре сценария — асимметричные плитки, не панель кнопок */}
-            <ul className="mt-10 grid gap-3 sm:grid-cols-2">
+            <ul className="mt-8 grid gap-3 sm:grid-cols-2">
               {SCENARIOS.map((s) => (
                 <li key={s.href}>
                   <Link
@@ -114,29 +112,29 @@ export default function HomePage() {
             </ul>
           </div>
 
-          {/* Крупное предметное фото флагмана */}
-          {hero ? (
-            <div className="relative">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-block border border-line bg-surface shadow-card lg:aspect-[5/6]">
-                <Image
-                  src={hero.variants[0]?.images[0] ?? ""}
-                  alt={hero.name}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
-                  priority
-                  data-boot-critical="true"
-                />
-              </div>
-              <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-2xl bg-surface/95 p-4 shadow-pop backdrop-blur">
-                <div>
-                  <p className="text-sm font-bold">{hero.name}</p>
-                  <p className="text-xs text-muted">{hero.tagline}</p>
-                </div>
-                <span className="shrink-0 text-sm font-bold tabular-nums text-accent">в наличии</span>
-              </div>
+          {/* Фотография владельца как часть композиции: спокойная зелёная форма
+              за фото и тонкий золотой акцент; без рамок-баннеров.
+              На mobile идёт после текста и не выше ~40% первого экрана. */}
+          <div className="relative mx-auto w-full max-w-[420px] lg:max-w-none">
+            <div
+              aria-hidden="true"
+              className="absolute inset-x-6 top-4 bottom-10 rounded-block bg-tint lg:inset-x-10 lg:top-10"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute right-8 top-6 hidden h-2 w-14 rounded-full bg-signal/60 sm:block lg:right-16 lg:top-14"
+            />
+            <div className="relative aspect-[4/3.2] overflow-hidden rounded-b-block rounded-t-[999px] sm:aspect-[4/4.9]">
+              <Image
+                src="/images/evgeniy-founder.webp"
+                alt="Евгений — основатель магазина EVGENIY APPLE"
+                fill
+                priority
+                sizes="(max-width: 640px) 92vw, (max-width: 1024px) 440px, 560px"
+                className="object-cover object-[68%_30%] sm:object-[66%_28%] lg:object-[62%_26%]"
+              />
             </div>
-          ) : null}
+          </div>
         </div>
       </Container>
 
@@ -154,22 +152,28 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* Актуальные iPhone — первые 8 из карусели (полная карусель на этапе 4) */}
-      <Container className="py-14 lg:py-20">
-        <div className="flex items-end justify-between gap-4">
-          <h2 className="text-2xl font-extrabold tracking-tight lg:text-3xl">Актуальные iPhone</h2>
-          <Link href="/catalog?category=iphone" className="shrink-0 text-sm font-semibold text-accent hover:text-accent-strong">
-            Все модели →
-          </Link>
+      {/* Карусель актуальных iPhone (ТЗ §9) */}
+      <section className="overflow-hidden py-14 lg:py-20">
+        <Container>
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <h2 className="text-2xl font-extrabold tracking-tight lg:text-3xl">Актуальные iPhone</h2>
+              <p className="mt-1.5 text-sm text-muted">Наведите — лента остановится. Полный выбор в каталоге.</p>
+            </div>
+            <Link href="/catalog?category=iphone" className="shrink-0 text-sm font-semibold text-accent hover:text-accent-strong">
+              Все модели →
+            </Link>
+          </div>
+        </Container>
+        <div className="mt-8">
+          <FeaturedCarousel products={featured} />
         </div>
-        <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
-          {featured.map((p, i) => (
-            <ProductCard key={p.slug} product={p} priority={i < 4} />
-          ))}
-        </div>
-      </Container>
+      </section>
 
-      {/* Категории — редакционная сетка (полная журнальная раскладка на этапе 5) */}
+      {/* Личный блок доверия владельца */}
+      <FounderTrustBlock />
+
+      {/* Категории — редакционная сетка */}
       <section className="border-t border-line bg-surface py-14 lg:py-20">
         <Container>
           <h2 className="text-2xl font-extrabold tracking-tight lg:text-3xl">Категории</h2>
@@ -184,10 +188,7 @@ export default function HomePage() {
                     <span className="text-lg font-bold">{c.name}</span>
                     <p className="mt-1 max-w-[220px] text-sm text-muted">{c.caption}</p>
                   </div>
-                  <span
-                    aria-hidden="true"
-                    className="text-xs font-bold tabular-nums text-muted/60"
-                  >
+                  <span aria-hidden="true" className="text-xs font-bold tabular-nums text-muted/60">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                 </Link>
@@ -250,7 +251,7 @@ export default function HomePage() {
             <div>
               <h2 className="text-2xl font-extrabold tracking-tight lg:text-3xl">Trade-in</h2>
               <p className="mt-3 max-w-md text-[15px] leading-relaxed text-muted">
-                Сдайте старое устройство в зачёт нового. Менеджер оценивает по состоянию
+                Сдайте старое устройство в зачёт нового. Евгений оценивает по состоянию
                 и подтверждает сумму после осмотра.
               </p>
               <Button href="/trade-in" size="lg" className="mt-6">
