@@ -1,0 +1,66 @@
+@import "tailwindcss";
+
+/*
+ * Дизайн-токены витрины.
+ * Палитра зафиксирована ТЗ (canvas/surface/ink/muted/line).
+ * TODO: заменить акцент на фирменный цвет заказчика после получения логотипа.
+ */
+@theme {
+  --color-canvas: #f7f7f3;
+  --color-surface: #ffffff;
+  --color-ink: #171717;
+  --color-muted: #737373;
+  --color-line: #e5e5e0;
+
+  --color-accent: #2f5d3a;
+  --color-accent-strong: #254a2e;
+  --color-tint: #eaf1ea;
+
+  /* Жёлтый — только как малый сигнал статуса, не CTA (правило ТЗ) */
+  --color-signal: #f2c744;
+  --color-signal-tint: #fbf3dc;
+  --color-signal-ink: #8a6d1f;
+
+  --radius-card: 16px;
+  --radius-block: 24px;
+
+  --shadow-card: 0 1px 2px rgb(23 23 23 / 0.04);
+  --shadow-pop: 0 12px 32px rgb(23 23 23 / 0.1);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@theme inline {
+  --font-sans: var(--font-manrope);
+}
+
+@layer base {
+  body {
+    @apply bg-canvas font-sans text-ink antialiased;
+  }
+
+  ::selection {
+    background: var(--color-tint);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Полное отключение движения по системной настройке (требование ТЗ) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
