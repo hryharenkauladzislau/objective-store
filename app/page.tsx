@@ -125,6 +125,7 @@ export default function HomePage() {
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   className="object-cover"
                   priority
+                  data-boot-critical="true"
                 />
               </div>
               <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between rounded-2xl bg-surface/95 p-4 shadow-pop backdrop-blur">

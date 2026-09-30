@@ -3,6 +3,7 @@ import { Manrope } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { DartLoader } from "@/components/loading/DartLoader";
 
 /*
  * TODO: заменить название, описание и контакты на данные заказчика (ТЗ §24).
@@ -26,6 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="ru" className={`${manrope.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">
+        <DartLoader />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
