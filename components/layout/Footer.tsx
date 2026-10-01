@@ -1,11 +1,12 @@
 import Link from "next/link";
+import { BrandMarkPlaceholder } from "@/components/brand/BrandMarkPlaceholder";
 import { Container } from "@/components/ui/primitives";
+import { PhoneLink, SocialLink } from "@/components/layout/ContactLinks";
 import { SITE } from "@/lib/site";
 
 /*
- * Footer по ТЗ §10: категории, доставка и оплата, гарантия, Trade-in, контакты,
- * адрес, график, юридические ссылки.
- * TODO: заменить все контакты, адрес, график и юрданные на данные заказчика.
+ * Footer по ТЗ §10: категории, покупателям, компания, контакты-плейсхолдеры,
+ * юридические ссылки. Контакты — из lib/site.ts без фейковых значений.
  */
 
 const COLUMNS: Array<{ title: string; links: Array<{ href: string; label: string }> }> = [
@@ -25,15 +26,17 @@ const COLUMNS: Array<{ title: string; links: Array<{ href: string; label: string
     links: [
       { href: "/shipping", label: "Доставка и оплата" },
       { href: "/warranty", label: "Гарантия" },
+      { href: "/repair", label: "Ремонт и обслуживание" },
       { href: "/trade-in", label: "Trade-in" },
       { href: "/used", label: "Проверенные б/у" },
       { href: "/compare", label: "Сравнение" },
+      { href: "/faq", label: "Частые вопросы" },
     ],
   },
   {
     title: "Компания",
     links: [
-      { href: "/about", label: "О магазине" },
+      { href: "/about", label: "Обо мне" },
       { href: "/contacts", label: "Контакты" },
     ],
   },
@@ -45,24 +48,19 @@ export function Footer() {
       <Container className="py-12">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
-            <Link href="/" className="inline-flex items-baseline gap-1.5" aria-label="EVGENIY APPLE — на главную">
-              <span className="text-[17px] font-extrabold uppercase tracking-tight">Evgeniy</span>
-              <span className="text-[13px] font-bold uppercase tracking-[0.14em] text-muted">Apple</span>
+            <Link href="/" aria-label="EVGENIY APPLE — на главную">
+              <BrandMarkPlaceholder className="text-[17px]" />
             </Link>
-            {/* TODO: заменить контакты и график на данные владельца */}
+            {/* TODO: заменить адрес и график на данные владельца (ТЗ §24) */}
             <p className="mt-4 text-sm text-muted">
-              {SITE.city}, ул. Примерная, 12
+              {SITE.city} — адрес и график уточняются
               <br />
-              Ежедневно 10:00–20:00
+              Ответы на вопросы — лично от {SITE.founderName}
             </p>
-            <p className="mt-3 text-sm">
-              <a href={SITE.telegramUrl} className="font-semibold text-accent hover:text-accent-strong">
-                {SITE.telegramLabel}
-              </a>
-              <span className="mx-2 text-line">·</span>
-              <a href="tel:+375290000000" className="font-semibold hover:text-ink">
-                +375 29 000-00-00
-              </a>
+            <p className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-sm">
+              <PhoneLink />
+              <SocialLink network="telegram" />
+              <SocialLink network="instagram" />
             </p>
           </div>
 

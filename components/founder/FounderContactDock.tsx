@@ -2,18 +2,20 @@ import Image from "next/image";
 import { SITE } from "@/lib/site";
 
 /*
- * Фиксированная кнопка связи (личный бренд владельца).
- * Небольшая, без стандартной синей кнопки Telegram и без официальной символики.
- * Зелёная точка — индикатор «на связи» (пульс отключается при reduced-motion
- * глобальным правилом в globals.css).
+ * Фиксированная кнопка связи (личный бренд владельца) — единственная плавающая
+ * точка входа (ТЗ §8). Пока ссылка Telegram не предоставлена, ведёт на страницу
+ * контактов вместо нерабочего адреса; после заполнения lib/site.ts
+ * автоматически переключается на Telegram.
  */
 export function FounderContactDock() {
+  const href = SITE.telegramUrl ?? "/contacts?topic=question";
+  const isExternal = SITE.telegramUrl !== null;
+
   return (
     <a
-      href={SITE.telegramUrl}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`Задать вопрос ${SITE.founderName} — ${SITE.telegramLabel}`}
+      href={href}
+      {...(isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      aria-label={`Задать вопрос — ${SITE.telegramLabel} или страница контактов`}
       className="fixed bottom-4 right-4 z-50 flex items-center gap-2.5 rounded-full border border-line bg-surface py-1.5 pl-1.5 pr-4 shadow-card transition-colors duration-200 hover:border-ink/25"
       style={{ paddingBottom: "max(0.375rem, env(safe-area-inset-bottom) * 0.4)" }}
     >

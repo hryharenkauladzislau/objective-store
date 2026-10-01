@@ -139,6 +139,7 @@ const SIM_PHONE = sim("Dual eSIM", "Nano-SIM + eSIM");
 export const products: Product[] = [
   {
     slug: "iphone-17-pro-max",
+    addedAt: "2025-09-09",
     category: "iphone",
     name: "iPhone 17 Pro Max",
     series: "iPhone 17",
@@ -165,6 +166,7 @@ export const products: Product[] = [
   },
   {
     slug: "iphone-17-pro",
+    addedAt: "2025-09-09",
     category: "iphone",
     name: "iPhone 17 Pro",
     series: "iPhone 17",
@@ -191,6 +193,7 @@ export const products: Product[] = [
   },
   {
     slug: "iphone-17",
+    addedAt: "2025-09-09",
     category: "iphone",
     name: "iPhone 17",
     series: "iPhone 17",
@@ -219,6 +222,7 @@ export const products: Product[] = [
   },
   {
     slug: "iphone-air",
+    addedAt: "2025-09-09",
     category: "iphone",
     name: "iPhone Air",
     series: "iPhone 17",
@@ -246,6 +250,7 @@ export const products: Product[] = [
   },
   {
     slug: "iphone-16-pro-max",
+    addedAt: "2024-09-09",
     category: "iphone",
     name: "iPhone 16 Pro Max",
     series: "iPhone 16",
@@ -272,6 +277,7 @@ export const products: Product[] = [
   },
   {
     slug: "iphone-16-pro",
+    addedAt: "2024-09-09",
     category: "iphone",
     name: "iPhone 16 Pro",
     series: "iPhone 16",
@@ -298,6 +304,7 @@ export const products: Product[] = [
   },
   {
     slug: "iphone-16",
+    addedAt: "2024-09-09",
     category: "iphone",
     name: "iPhone 16",
     series: "iPhone 16",
@@ -325,6 +332,7 @@ export const products: Product[] = [
   },
   {
     slug: "iphone-16e",
+    addedAt: "2025-02-19",
     category: "iphone",
     name: "iPhone 16e",
     series: "iPhone 16",
@@ -350,6 +358,7 @@ export const products: Product[] = [
   },
   {
     slug: "iphone-15",
+    addedAt: "2023-09-12",
     category: "iphone",
     name: "iPhone 15",
     series: "iPhone 15",
@@ -377,6 +386,7 @@ export const products: Product[] = [
   },
   {
     slug: "iphone-15-plus",
+    addedAt: "2023-09-12",
     category: "iphone",
     name: "iPhone 15 Plus",
     series: "iPhone 15",
@@ -403,6 +413,7 @@ export const products: Product[] = [
   },
   {
     slug: "macbook-pro-16-m4",
+    addedAt: "2024-10-30",
     category: "mac",
     name: "MacBook Pro 16″ M4 Pro",
     series: "MacBook Pro",
@@ -428,6 +439,7 @@ export const products: Product[] = [
   },
   {
     slug: "macbook-air-13-m4",
+    addedAt: "2025-03-05",
     category: "mac",
     name: "MacBook Air 13″ M4",
     series: "MacBook Air",
@@ -455,6 +467,7 @@ export const products: Product[] = [
   },
   {
     slug: "ipad-pro-m5",
+    addedAt: "2025-10-15",
     category: "ipad",
     name: "iPad Pro M5",
     series: "iPad Pro",
@@ -479,6 +492,7 @@ export const products: Product[] = [
   },
   {
     slug: "ipad-air-m3",
+    addedAt: "2025-03-04",
     category: "ipad",
     name: "iPad Air M3",
     series: "iPad Air",
@@ -505,6 +519,7 @@ export const products: Product[] = [
   },
   {
     slug: "apple-watch-series-11",
+    addedAt: "2025-09-09",
     category: "watch",
     name: "Apple Watch Series 11",
     series: "Apple Watch",
@@ -530,6 +545,7 @@ export const products: Product[] = [
   },
   {
     slug: "apple-watch-ultra-3",
+    addedAt: "2025-09-09",
     category: "watch",
     name: "Apple Watch Ultra 3",
     series: "Apple Watch",
@@ -551,6 +567,7 @@ export const products: Product[] = [
   },
   {
     slug: "airpods-pro-3",
+    addedAt: "2025-09-09",
     category: "airpods",
     name: "AirPods Pro 3",
     series: "AirPods",
@@ -572,6 +589,7 @@ export const products: Product[] = [
   },
   {
     slug: "magsafe-cases",
+    addedAt: "2023-09-12",
     category: "accessories",
     name: "Чехлы и MagSafe-аксессуары",
     series: "Аксессуары",

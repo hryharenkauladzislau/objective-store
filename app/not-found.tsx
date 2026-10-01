@@ -11,7 +11,7 @@ export default function NotFound() {
           Возможно, модель больше не в каталоге. Посмотрите актуальные товары.
         </p>
         <div className="mt-7">
-          <Button href="/catalog">Перейти в каталог</Button>
+          <Button href="/catalog">Каталог</Button>
         </div>
       </div>
     </Container>

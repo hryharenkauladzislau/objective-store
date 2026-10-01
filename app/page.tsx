@@ -1,41 +1,32 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Container } from "@/components/ui/primitives";
 import { Button } from "@/components/ui/Button";
+import { Container } from "@/components/ui/primitives";
 import { FeaturedCarousel } from "@/components/carousel/FeaturedCarousel";
-import { FounderTrustBlock } from "@/components/founder/FounderTrustBlock";
-import { getCategories, getFeaturedProducts, getUsedUnits } from "@/lib/catalog";
-import { formatPrice } from "@/lib/catalog";
+import { PhoneLink, SocialLink } from "@/components/layout/ContactLinks";
+import type { Product } from "@/lib/catalog";
+import {
+  formatPrice,
+  getActualOffers,
+  getCategories,
+  getFeaturedProducts,
+  getUsedUnits,
+  productPriceFrom,
+} from "@/lib/catalog";
 import { SITE } from "@/lib/site";
 
-/*
- * Главная (ТЗ §8–10): первый экран с личным брендом владельца и четырьмя
- * сценариями, карусель актуальных iPhone, полоса доверия, категории,
- * б/у, личный блок доверия, Trade-in, как проходит покупка.
- */
+export const metadata = {
+  title: { absolute: "EVGENIY APPLE — техника Apple в Минске" },
+  description:
+    "Актуальные iPhone, Mac, iPad и Watch в Минске. Проверенные б/у с паспортом, Trade-in, гарантия магазина. Цены и наличие подтверждает лично Евгений.",
+};
 
-const SCENARIOS = [
-  {
-    href: "/catalog",
-    title: "Купить технику",
-    text: "iPhone, Mac, iPad — новые, с гарантией",
-  },
-  {
-    href: "/trade-in",
-    title: "Оценить устройство",
-    text: "Trade-in: скидка за старое устройство",
-  },
-  {
-    href: "/used",
-    title: "Смотреть б/у",
-    text: "Проверенные устройства с паспортом",
-  },
-  {
-    href: "/contacts?topic=question",
-    title: "Задать вопрос",
-    text: "Отвечает лично Евгений",
-  },
-];
+/*
+ * Главная по актуальной ревизии ТЗ §8–10: карусель — первый экран, далее
+ * категории, полоса доверия, б/у, Trade-in, актуальные предложения,
+ * покупка/доставка/оплата/цена, гарантия, ремонт, обо мне (фото владельца —
+ * только здесь), факты, контакты, FAQ. Текстовый hero удалён.
+ */
 
 const TRUST = [
   { title: "Гарантия магазина", text: "6–12 месяцев на новые и б/у" },
@@ -62,107 +53,59 @@ const STEPS = [
   },
 ];
 
+const FACTS = [
+  { title: "Проверка каждого устройства", text: "Диагностика до продажи и паспорт для б/у" },
+  { title: "Честные цены", text: "Итоговая сумма подтверждается до оплаты" },
+  { title: "Поддержка после покупки", text: "Помощь с настройкой и переносом данных" },
+  { title: "Один владелец", text: "Отвечает лично Евгений — без операторов" },
+];
+
+/* Полоса фактов после «Обо мне» — короткие причины доверять, без повторов */
+const QUICK_FACTS = [
+  { title: "Паспорт для б/у", text: "Аккумулятор, комплект и дефекты — всё открыто" },
+  { title: "Проверка при получении", text: "Осмотр устройства на месте или при доставке" },
+  { title: "Обмен по гарантии", text: "Без споров — вопрос решает Евгений лично" },
+  { title: "Trade-in в зачёт", text: "Старое устройство снижает цену нового" },
+];
+
+const FAQ = [
+  {
+    q: "Как узнать актуальную цену и наличие?",
+    a: "Цены в каталоге округлены и могут отличаться от курса на день покупки. Евгений подтверждает итоговую сумму и наличие перед оплатой.",
+  },
+  {
+    q: "Можно ли сдать старое устройство?",
+    a: "Да, работает Trade-in: старое устройство идёт в зачёт нового. Сумма оценивается по состоянию после осмотра.",
+  },
+  {
+    q: "Какая гарантия на устройства?",
+    a: "Новые устройства — гарантия магазина, б/у — 6–12 месяцев в зависимости от экземпляра. Условия — в разделе «Гарантия».",
+  },
+  {
+    q: "Есть ли доставка по Минску?",
+    a: "Да, при заказе до 18:00 доставка в день заказа. Устройство можно проверить при получении.",
+  },
+];
+
 export default function HomePage() {
   const featured = getFeaturedProducts().slice(0, 8);
+  const actualOffers = getActualOffers();
   const used = getUsedUnits();
   const categories = getCategories();
 
   return (
     <>
-      {/* Первый экран: слева смысл и сценарии, справа — фото владельца в композиции */}
-      <Container className="pb-12 pt-8 lg:pb-16 lg:pt-12">
-        <div className="grid items-center gap-8 lg:grid-cols-[1.05fr_1fr] lg:gap-12">
-          <div>
-            <p className="text-sm font-semibold text-accent">Техника Apple в {SITE.city}</p>
-            <h1 className="mt-3 text-[34px] font-extrabold leading-[1.1] tracking-tight sm:text-4xl lg:text-[52px] lg:leading-[1.05]">
-              Помогу выбрать технику, которая действительно вам подходит
-            </h1>
-            <p className="mt-4 max-w-md text-[15px] leading-relaxed text-muted lg:text-base">
-              Каталог актуальных устройств, консультация перед покупкой и помощь после неё.
-            </p>
-
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Button href="/catalog" size="lg">
-                Смотреть каталог
-              </Button>
-              <Button href="/contacts?topic=question" variant="secondary" size="lg">
-                Задать вопрос Евгению
-              </Button>
-            </div>
-            <p className="mt-3 text-sm text-muted">
-              На связи лично — без операторов и шаблонных ответов
-            </p>
-
-            {/* Четыре сценария — асимметричные плитки, не панель кнопок */}
-            <ul className="mt-8 grid gap-3 sm:grid-cols-2">
-              {SCENARIOS.map((s) => (
-                <li key={s.href}>
-                  <Link
-                    href={s.href}
-                    className="group flex h-full flex-col rounded-card border border-line bg-surface p-4 transition-all duration-200 ease-out-soft hover:-translate-y-0.5 hover:border-ink/20 hover:shadow-card"
-                  >
-                    <span className="text-[15px] font-bold">{s.title}</span>
-                    <span className="mt-1 text-sm leading-snug text-muted">{s.text}</span>
-                    <span className="mt-3 text-sm font-semibold text-accent opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                      Перейти →
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Фотография владельца как часть композиции: спокойная зелёная форма
-              за фото и тонкий золотой акцент; без рамок-баннеров.
-              На mobile идёт после текста и не выше ~40% первого экрана. */}
-          <div className="relative mx-auto w-full max-w-[420px] lg:max-w-none">
-            <div
-              aria-hidden="true"
-              className="absolute inset-x-6 top-4 bottom-10 rounded-block bg-tint lg:inset-x-10 lg:top-10"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute right-8 top-6 hidden h-2 w-14 rounded-full bg-signal/60 sm:block lg:right-16 lg:top-14"
-            />
-            <div className="relative aspect-[4/3.2] overflow-hidden rounded-b-block rounded-t-[999px] sm:aspect-[4/4.9]">
-              <Image
-                src="/images/evgeniy-founder.webp"
-                alt="Евгений — основатель магазина EVGENIY APPLE"
-                fill
-                priority
-                sizes="(max-width: 640px) 92vw, (max-width: 1024px) 440px, 560px"
-                className="object-cover object-[68%_30%] sm:object-[66%_28%] lg:object-[62%_26%]"
-              />
-            </div>
-          </div>
-        </div>
-      </Container>
-
-      {/* Полоса доверия */}
-      <section className="border-y border-line bg-surface">
-        <Container>
-          <ul className="grid divide-line sm:grid-cols-2 sm:divide-x lg:grid-cols-4">
-            {TRUST.map((item) => (
-              <li key={item.title} className="px-2 py-5 lg:px-6">
-                <p className="text-sm font-bold">{item.title}</p>
-                <p className="mt-1 text-sm text-muted">{item.text}</p>
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </section>
-
-      {/* Карусель актуальных iPhone (ТЗ §9) */}
-      <section className="overflow-hidden py-14 lg:py-20">
+      {/* Карусель — первый контентный блок после шапки (ТЗ §9) */}
+      <section className="overflow-hidden py-10 lg:py-14">
         <Container>
           <div className="flex items-end justify-between gap-4">
             <div>
-              <h2 className="text-2xl font-extrabold tracking-tight lg:text-3xl">Актуальные iPhone</h2>
+              <h1 className="text-2xl font-extrabold tracking-tight lg:text-3xl">Актуальные iPhone</h1>
               <p className="mt-1.5 text-sm text-muted">Наведите — лента остановится. Полный выбор в каталоге.</p>
             </div>
-            <Link href="/catalog?category=iphone" className="shrink-0 text-sm font-semibold text-accent hover:text-accent-strong">
-              Все модели →
-            </Link>
+            <Button href="/catalog" size="sm" className="shrink-0">
+              Каталог
+            </Button>
           </div>
         </Container>
         <div className="mt-8">
@@ -170,10 +113,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Личный блок доверия владельца */}
-      <FounderTrustBlock />
-
-      {/* Категории — редакционная сетка */}
+      {/* Категории — редакционная сетка (ТЗ §8) */}
       <section className="border-t border-line bg-surface py-14 lg:py-20">
         <Container>
           <h2 className="text-2xl font-extrabold tracking-tight lg:text-3xl">Категории</h2>
@@ -192,6 +132,20 @@ export default function HomePage() {
                     {String(i + 1).padStart(2, "0")}
                   </span>
                 </Link>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </section>
+
+      {/* Полоса доверия */}
+      <section className="border-b border-line bg-surface">
+        <Container>
+          <ul className="grid divide-line sm:grid-cols-2 sm:divide-x lg:grid-cols-4">
+            {TRUST.map((item) => (
+              <li key={item.title} className="border-t border-line px-2 py-5 sm:border-t-0 lg:px-6">
+                <p className="text-sm font-bold">{item.title}</p>
+                <p className="mt-1 text-sm text-muted">{item.text}</p>
               </li>
             ))}
           </ul>
@@ -245,7 +199,7 @@ export default function HomePage() {
       </Container>
 
       {/* Trade-in */}
-      <section className="border-t border-line bg-surface py-14 lg:py-20">
+      <section className="border-y border-line bg-surface py-14 lg:py-20">
         <Container>
           <div className="grid items-center gap-8 lg:grid-cols-2">
             <div>
@@ -270,7 +224,38 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* Как проходит покупка */}
+      {/* Актуальные предложения — без пересечения с каруселью (ТЗ §8) */}
+      {actualOffers.length > 0 ? (
+        <Container className="py-14 lg:py-20">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <h2 className="text-2xl font-extrabold tracking-tight lg:text-3xl">Актуальные предложения</h2>
+              <p className="mt-1.5 text-sm text-muted">Новые поступления и ходовые позиции — тоже в наличии</p>
+            </div>
+            <Link href="/catalog" className="shrink-0 text-sm font-semibold text-accent hover:text-accent-strong">
+              Весь каталог →
+            </Link>
+          </div>
+          <ul className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+            {actualOffers.slice(0, 8).map((product) => (
+              <li key={product.slug}>
+                <Link
+                  href={`/catalog/${product.slug}`}
+                  className="group flex h-full flex-col rounded-card border border-line bg-surface p-4 transition-all duration-200 ease-out-soft hover:-translate-y-0.5 hover:shadow-card"
+                >
+                  <span className="font-bold leading-snug">{product.name}</span>
+                  <span className="mt-1 line-clamp-2 text-sm leading-snug text-muted">{product.tagline}</span>
+                  <span className="mt-auto pt-3 text-[15px] font-bold tabular-nums text-accent">
+                    {priceFromLabel(product)}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      ) : null}
+
+      {/* Покупка, доставка, оплата, цена */}
       <Container className="py-14 lg:py-20">
         <h2 className="text-2xl font-extrabold tracking-tight lg:text-3xl">Как проходит покупка</h2>
         <ol className="mt-8 grid gap-4 md:grid-cols-3">
@@ -282,7 +267,151 @@ export default function HomePage() {
             </li>
           ))}
         </ol>
+        <p className="mt-6 text-sm text-muted">
+          Оплата: наличными, картой или переводом. Доставка по Минску — в день заказа
+          при оформлении до 18:00. Итоговая цена подтверждается Евгением перед покупкой.
+        </p>
+      </Container>
+
+      {/* Гарантия */}
+      <section className="border-t border-line bg-surface py-14 lg:py-20">
+        <Container>
+          <div className="max-w-2xl">
+            <h2 className="text-2xl font-extrabold tracking-tight lg:text-3xl">Гарантия</h2>
+            <p className="mt-3 text-[15px] leading-relaxed text-muted">
+              На новые устройства — гарантия магазина. На проверенные б/у — 6–12 месяцев
+              в зависимости от экземпляра. Обмен и диагностика — без споров и переписки:
+              вопрос решает Евгений лично.
+            </p>
+            <Button href="/warranty" variant="secondary" className="mt-6">
+              Подробнее о гарантии
+            </Button>
+          </div>
+        </Container>
+      </section>
+
+      {/* Ремонт и обслуживание */}
+      <Container className="py-14 lg:py-20">
+        <div className="max-w-2xl">
+          <h2 className="text-2xl font-extrabold tracking-tight lg:text-3xl">Ремонт и обслуживание</h2>
+          <p className="mt-3 text-[15px] leading-relaxed text-muted">
+            Диагностика, замена аккумулятора и дисплея, настройка и перенос данных.
+            Сначала оценка, потом работа — стоимость согласуется заранее.
+          </p>
+          <Button href="/repair" variant="secondary" className="mt-6">
+            Услуги ремонта
+          </Button>
+        </div>
+      </Container>
+
+      {/* Обо мне — единственное место с фото владельца (ТЗ §8) */}
+      <section id="about" className="border-y border-line bg-surface py-14 lg:py-20">
+        <Container>
+          <div className="grid items-center gap-8 lg:grid-cols-[1fr_1.05fr] lg:gap-12">
+            <div className="mx-auto w-full max-w-[360px] lg:max-w-none">
+              <div className="relative aspect-[4/4.9] overflow-hidden rounded-b-card rounded-t-[999px]">
+                <Image
+                  src="/images/evgeniy-founder.webp"
+                  alt="Евгений — основатель магазина EVGENIY APPLE"
+                  fill
+                  loading="lazy"
+                  sizes="(max-width: 1024px) 90vw, 480px"
+                  className="object-cover object-[62%_26%]"
+                />
+              </div>
+            </div>
+            <div>
+              <h2 className="text-2xl font-extrabold tracking-tight lg:text-3xl">Обо мне</h2>
+              <p className="mt-4 text-[15px] leading-relaxed text-muted">
+                Я — Евгений, владелец магазина техники Apple в Минске. Сам подбираю
+                устройства, проверяю их перед продажей и остаюсь на связи после покупки:
+                подсказать, настроить, обменять по гарантии.
+              </p>
+              <ul className="mt-6 space-y-3">
+                {FACTS.map((fact) => (
+                  <li key={fact.title} className="flex gap-3">
+                    <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
+                    <p className="text-sm leading-relaxed">
+                      <span className="font-bold">{fact.title}.</span>{" "}
+                      <span className="text-muted">{fact.text}</span>
+                    </p>
+                  </li>
+                ))}
+              </ul>
+              <Button href="/contacts?topic=question" variant="secondary" className="mt-8">
+                Задать вопрос
+              </Button>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* Факты — короткие причины доверять */}
+      <Container className="py-14 lg:py-20">
+        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {QUICK_FACTS.map((fact) => (
+            <li key={fact.title} className="rounded-card border border-line bg-surface p-5 shadow-card">
+              <p className="font-bold">{fact.title}</p>
+              <p className="mt-1.5 text-sm leading-snug text-muted">{fact.text}</p>
+            </li>
+          ))}
+        </ul>
+      </Container>
+
+      {/* Контакты и соцсети (ТЗ §24: плейсхолдеры из lib/site.ts) */}
+      <section className="border-t border-line bg-surface py-14 lg:py-20">
+        <Container>
+          <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
+            <div>
+              <h2 className="text-2xl font-extrabold tracking-tight lg:text-3xl">Контакты</h2>
+              <p className="mt-3 max-w-md text-[15px] leading-relaxed text-muted">
+                Напишите или позвоните — отвечаю лично. Наличие, цена и сроки
+                подтверждаются перед покупкой.
+              </p>
+              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2 text-[15px]">
+                <PhoneLink />
+                <SocialLink network="telegram" />
+                <SocialLink network="instagram" />
+              </div>
+              <Button href="/contacts" variant="secondary" className="mt-6">
+                Все контакты
+              </Button>
+            </div>
+            <div className="rounded-card border border-line bg-canvas p-6">
+              <p className="text-sm font-bold">Где забрать</p>
+              <p className="mt-1.5 text-sm text-muted">
+                {SITE.city} — точка продаж и выдачи. Адрес и график появятся здесь
+                после подтверждения данных владельцем.
+              </p>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* FAQ */}
+      <Container className="py-14 lg:py-20">
+        <h2 className="text-2xl font-extrabold tracking-tight lg:text-3xl">Частые вопросы</h2>
+        <ul className="mt-8 grid gap-4 md:grid-cols-2">
+          {FAQ.map((item) => (
+            <li key={item.q} className="rounded-card border border-line bg-surface p-6 shadow-card">
+              <p className="font-bold">{item.q}</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted">{item.a}</p>
+            </li>
+          ))}
+        </ul>
+        <p className="mt-6 text-sm text-muted">
+          Остались вопросы?{" "}
+          <Link href="/faq" className="font-semibold text-accent hover:text-accent-strong">
+            Смотреть все вопросы →
+          </Link>
+        </p>
       </Container>
     </>
   );
+}
+
+/** Цена «от» карточки актуального предложения (ТЗ §13) */
+function priceFromLabel(product: Product): string {
+  const price = productPriceFrom(product);
+  return price !== null ? `от ${formatPrice(price)}` : "Цена по запросу";
 }

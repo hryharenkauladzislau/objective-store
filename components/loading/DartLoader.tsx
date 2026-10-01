@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { BrandMark } from "@/components/brand/BrandMark";
+import { BrandMarkPlaceholder } from "@/components/brand/BrandMarkPlaceholder";
 
 /*
  * Фирменная загрузка (ТЗ §7): мягкие округлые дротики по очереди попадают
@@ -46,7 +46,7 @@ export function DartLoader() {
   const readyRef = useRef(false);
   const targetRef = useRef(0);
 
-  /* Временный debug-режим для скриншота: /boot-demo?hold=4 (удаляется после согласования) */
+  /* Debug-режим для скриншотов: добавьте ?hold=N к любому адресу страницы */
   useEffect(() => {
     const hold = new URLSearchParams(window.location.search).get("hold");
     if (!hold) return;
@@ -68,10 +68,12 @@ export function DartLoader() {
 
     document.fonts?.ready.then(() => bump(SEGMENTS / 2));
 
-    // Критическое изображение появляется в DOM после гидрации — короткий опрос
+    // Критическое изображение появляется в DOM после гидрации — короткий опрос.
+    // Лимит мал, потому что фото первого экрана на главной больше нет (ТЗ:
+    // фото владельца — только в «Обо мне» ниже фолда): не ждём его дольше ~1.2 с.
     let polls = 0;
     const pollImg = () => {
-      if (cancelled || polls > 40) {
+      if (cancelled || polls > 12) {
         bump(SEGMENTS / 2);
         return;
       }
@@ -162,8 +164,8 @@ export function DartLoader() {
       }`}
     >
       <div className="relative flex h-60 w-60 items-center justify-center">
-        <BrandMark
-          className={`h-32 w-32 text-ink transition-transform duration-500 ease-out-soft ${
+        <BrandMarkPlaceholder
+          className={`text-4xl text-ink transition-transform duration-500 ease-out-soft ${
             finishing && !reducedMotion ? "scale-110" : ""
           }`}
         />
