@@ -1,31 +1,11 @@
-# Objective — витрина магазина техники Apple
+# EVGENIY APPLE — Railway release
 
-Дизайн-прототип первой итерации: Next.js 16 + TypeScript + Tailwind CSS 4.
-Backend, админка, Excel-импорт и авторизация в прототип не входят — данные
-товаров хранятся в локальном mock-файле `lib/mock/catalog.ts`, но компоненты
-спроектированы под подключение API и PostgreSQL без переделки интерфейса.
+Complete store website and admin: catalog/configurator, categories, prices and SALE, photo uploads, Excel import/export, used units, comparison, Trade-in and site presentation editor.
 
-## Маршруты прототипа
+**Deployment source is `evgeniy-release.tar.gz`.** Dockerfile extracts it into /app and builds it. Older prototype files at repository root are not used. See RELEASE.md for source revision and validation.
 
-- `/` — первый экран с выбором сценария и секции главной
-- `/catalog` — каталог (базовая сетка; фильтры на следующем этапе)
-- `/catalog/[slug]` — карточка товара (конфигуратор на следующем этапе)
-- `/used` — проверенные б/у устройства с паспортом экземпляра
-- `/trade-in`, `/shipping`, `/warranty`, `/contacts`, `/about`, `/compare`,
-  `/privacy`, `/terms` — каркасы служебных разделов
+For development extract the archive into an empty folder and read its README.md and docs/DELIVERY.md.
 
-## Команды
+Railway: select branch design-prototype, add PostgreSQL with DATABASE_URL, configure ADMIN_PASSWORD and ADMIN_SESSION_SECRET in Variables, then deploy. Never commit credentials. The admin route is /admin; health is /api/health.
 
-```bash
-npm run dev    # разработка
-npm run build  # production-сборка
-npm run lint   # ESLint
-npx tsc --noEmit  # проверка типов
-```
-
-## Данные и изображения
-
-- Товары, варианты, цены и статусы — mock (`lib/mock/catalog.ts`), проекция
-  будущей схемы БД из ТЗ: Category → Product → Variant (+ UsedUnit).
-- TODO: заменить данные и фотографии на материалы заказчика (ТЗ §24).
-- TODO: заменить временное название «Objective» и знак на логотип заказчика.
+The source archive includes 33 browser/API scenarios. Telegram historical offers and public Trade-in values have explicit dates and require merchant approval before use as current prices.
