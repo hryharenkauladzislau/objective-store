@@ -1,11 +1,11 @@
 # EVGENIY APPLE — Railway release
 
-Complete premium store website and admin: brand/category hierarchy, catalog/configurator, prices and SALE, photo uploads, Excel import/export, used units, comparison, configurable Trade-in, reviews/social proof, location map and site presentation editor.
+Dark premium storefront and admin: configurable brands/categories/subcategories with artwork, model/variant prices «от», SALE, photo uploads, validated TXT price import/export, Excel, used devices, comparison, Trade-in, Instagram, map and website presentation editor.
 
 **Deployment source is `evgeniy-release.tar.gz`.** Dockerfile extracts it into /app and builds it. Older prototype files at repository root are not used. See RELEASE.md for source revision and validation.
 
-For development extract the archive into an empty folder and read its README.md and docs/DELIVERY.md.
+TXT prices: Admin → Цены → Скачать TXT. One line per memory/color/SIM variant; edit only the final USD number, upload, inspect the changes and apply. Model cards remain grouped. Malformed/stale files are rejected.
 
-Railway: select branch design-prototype, add PostgreSQL with DATABASE_URL, configure ADMIN_PASSWORD and ADMIN_SESSION_SECRET in Variables, then deploy. Never commit credentials. The admin route is /admin; health is /api/health.
+Telegram drafts target @Evgeniy_apple and contain no site/source URLs. Only approved BYN/USD Trade-in estimates are displayed. Public research figures are not merchant offers.
 
-The source archive includes 34 browser/API scenarios. Telegram historical offers and public Trade-in values have explicit dates and require merchant approval before use as current prices.
+Railway: branch design-prototype, PostgreSQL DATABASE_URL, ADMIN_PASSWORD, ADMIN_SESSION_SECRET and NEXT_PUBLIC_SITE_URL. Never commit credentials. Admin /admin; health /api/health. Source includes 39 browser/API verification scenarios.

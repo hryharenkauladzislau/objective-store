@@ -1,13 +1,11 @@
-# Evgeniy Apple — packaged release
+# Verified source release — 2026-10-02
 
-Source revision: `635c54a787b91539a591c685c1e148a70f10716c`. The complete tested source is in `evgeniy-release.tar.gz`, with no credentials, node_modules or generated Next output.
+Source revision: `5d43495007fbf6b560e7c71266563e220fe87654` on design-prototype.
 
-The Dockerfile builds this release in `/app`; it does not build the older prototype files at repository root. Railway uses `railway.json` and checks `/api/health`.
+The deployment Dockerfile extracts evgeniy-release.tar.gz; root prototype directories are not the deployment source.
 
-For source development, extract the archive into an empty folder: `tar -xzf evgeniy-release.tar.gz -C <empty-folder>`. Run `npm ci` there. Read `docs/DELIVERY.md` for admin and deployment instructions.
+Changes: charcoal/gold dark storefront and admin; link-free Telegram purchase/service/Trade-in requests; no copy fallback, decorative arrows or carousel instructions; visible mobile question dock; equal comparison cards; memory/color variant selection; validated TXT import/export for every SKU with the price as the final number. Trade-in exposes only approved merchant prices in BYN/USD. Legacy Russian research prices are not public estimates.
 
-Production requires `DATABASE_URL` or a persistent volume with `STORAGE_DIR`, plus `ADMIN_PASSWORD` and `ADMIN_SESSION_SECRET`. Set credentials in Railway Variables, never commit them.
+Validation: ESLint, TypeScript, Next production build, 39 Chromium browser/API checks across 18 routes passed. Includes authenticated TXT preview/application, malformed and stale file rejection, variant-specific price changes, categories, SALE, media, CMS, Telegram texts and Trade-in BYN. No browser runtime errors.
 
-Validated: lint, TypeScript/production build and 34 browser/API scenarios. Trade-in numbers are public RUB reference ceilings pending merchant approval.
-
-This release adds the supplied Evgeniy Apple logo, premium brand → subcategory → model browsing, editable category imagery, Instagram/Yandex social proof, the interactive BC «Аякс» location panel and fully configurable Trade-in questionnaire. It also finalizes the manager/channel/Instagram links, branded social icons, founder portrait crop and Telegram purchase drafts with the selected configuration and «Цена от». The seed uses the public new-device price snapshot dated 2026-09-26; every final price still requires confirmation because the channel states that prices can change during the day.
+No credentials are included. Existing PostgreSQL catalogue/media and admin environment variables are retained on deployment.
