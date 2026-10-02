@@ -1,6 +1,6 @@
 # EVGENIY APPLE — Railway release
 
-Complete store website and admin: catalog/configurator, categories, prices and SALE, photo uploads, Excel import/export, used units, comparison, Trade-in and site presentation editor.
+Complete premium store website and admin: brand/category hierarchy, catalog/configurator, prices and SALE, photo uploads, Excel import/export, used units, comparison, configurable Trade-in, reviews/social proof, location map and site presentation editor.
 
 **Deployment source is `evgeniy-release.tar.gz`.** Dockerfile extracts it into /app and builds it. Older prototype files at repository root are not used. See RELEASE.md for source revision and validation.
 
