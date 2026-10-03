@@ -1,14 +1,14 @@
-# Evgeniy Apple — black storefront and full Trade-in configuration
-Source: b5dd961
+# Evgeniy Apple — native Telegram drafts and metallic brand accents
+Source: b7b7c2c
 
-Pure black default canvas, neutral gray surfaces, zero letter spacing throughout. Existing saved green default is migrated to black while custom accent colors and merchant content remain intact.
+Shared request links now use tg://resolve?domain=Evgeniy_apple&text= with exactly one percent-encoding pass. No HTTPS landing-page conversion, no blank browser target. Normalizes nonbreaking price spaces and truncates by Unicode codepoints. Applies to product requests, mobile purchase bar, used devices, Trade-in and service questions. Requires an installed Telegram client; native-app receipt cannot be proven in the cloud browser and should be checked on the merchant's device. No test request is sent.
 
-Enlarged logo, header, contact typography and all eight navigation links. Intermediate desktop widths use a separate navigation row to avoid clipping; mobile menu remains accessible. Shipping, warranty and repair now fill the content width with larger text and responsive service panels.
+Hero title: Лучшая оригинальная техника Apple и не только в Минске
+Hero kicker: Evgeniy Apple - Original Apple Equipment
+Existing subtitle remains unchanged. Saved old default hero copy is upgraded; merchant custom copy remains editable. Static metallic gradients use colors sampled from the supplied EA logo for buttons and text accents. No continuous gradient animation.
 
-Trade-in selects target model, memory, color and SIM from actual published catalog variants. Parent selection changes clear dependent values and prevent invalid combinations; out-of-stock variants are omitted. Preview photo and price follow the selected variant. Manager draft includes model, memory, color, SIM and current variant price with no website links. Help choosing a phone remains available. No request is sent during verification.
+Black background, zero tracking, enlarged responsive header, service panels and catalog-driven Trade-in configurations remain. Prior offscreen animation suspension, lazy map and no eager product prefetch remain. No changes to catalog pricing, categories, stock, merchant settings or media storage.
 
-Original local iPhone 17 Pro footage and posters remain, including static/reduced-motion fallback. Built-in older concept device-study images are replaced by these actual-device posters; merchant custom assets remain intact. Offscreen animation suspension, lazy map and no eager product prefetch are retained.
+Verification: native-link Unicode/delimiter regression, ESLint, TypeScript, production build, 17 API regression groups, 18 routes. Live DOM/visual verification follows deployment. Telegram format reference: https://core.telegram.org/api/links#public-username-links
 
-Verification: ESLint, TypeScript, production build, 17 API regression groups and 18 routes. Live UI verification follows publication.
-
-Production source is evgeniy-release.tar.gz extracted by Dockerfile; root files are older prototype. No credentials, local catalogs or uploaded private media in release.
+Production source is evgeniy-release.tar.gz extracted by Dockerfile; root files are older prototype. No credentials in release.
