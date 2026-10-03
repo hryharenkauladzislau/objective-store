@@ -1,11 +1,11 @@
 # Evgeniy Apple — official product footage and staged motion
-Source: e00b51e
+Source: a4d3a60
 
 The hand-built CSS phone is removed everywhere. Hero and Trade-in now use locally served original iPhone 17 Pro footage from Apple's public product page. Black backgrounds blend into the dark canvas (not true alpha video). Forward/reverse loops use real frames only and total less than 500 KB. Static posters cover autoplay failure and reduced motion; playback pauses when offscreen or the tab is hidden.
 
 Added typography cascade, staggered card and service reveals, photo reveal, hero parallax and CTA feedback without changing the merchant's palette or section order.
 
-The moving hero and Trade-in artwork use their own merchant-canvas backdrop for reliable screen blending. The oversized APPLE outline is omitted behind the film to avoid showing through the real devices.
+The moving hero and Trade-in artwork use their own merchant-canvas backdrop for reliable screen blending. Films stay inside that backdrop. Decorative oversized words are omitted behind the films to avoid showing through the real devices.
 
 All enabled CMS home sections, order, custom imagery, merchant copy, theme colors, links, products, prices, category management, cart/request/Trade-in logic and admin APIs preserved. The existing four-step Trade-in target-device selection remains unchanged.
 
