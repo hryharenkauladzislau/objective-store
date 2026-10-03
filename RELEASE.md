@@ -1,11 +1,13 @@
-# Evgeniy Apple — sculptural storefront v2
-Source: b834542
+# Evgeniy Apple — official product footage and staged motion
+Source: b842da1
 
-Design-only reconstruction using the reference compositions: asymmetric oversized typography, lightweight CSS 3D phone mockups with physical front/back/edge planes and camera layers, metal-light motion, pointer tilt and scroll motion, full-bleed macro photography, compact editorial grids, restyled catalog cards and conversion sections.
+The hand-built CSS phone is removed everywhere. Hero and Trade-in now use locally served original iPhone 17 Pro footage from Apple's public product page. Black backgrounds blend into the dark canvas (not true alpha video). Forward/reverse loops use real frames only and total less than 500 KB. Static posters cover autoplay failure and reduced motion; playback pauses when offscreen or the tab is hidden.
+
+Added typography cascade, staggered card and service reveals, photo reveal, hero parallax and CTA feedback without changing the merchant's palette or section order.
 
 All enabled CMS home sections, order, custom imagery, merchant copy, theme colors, links, products, prices, category management, cart/request/Trade-in logic and admin APIs preserved. The existing four-step Trade-in target-device selection remains unchanged.
 
 Verification: ESLint, TypeScript, production build, 17 API regression groups including 18 routes, category/SALE lifecycle, TXT/Excel prices, photo persistence and Trade-in. Live visual/workflow verification follows deployment.
-The CSS mockup is an illustrative branded sculpture, not an exact technical CAD model or newly available product offer. Existing editorial photographs retained; no invented prices or stock.
+Sources, processing and commercial-use permission caveat are included in docs/OFFICIAL-MOTION-ASSETS.md. Public availability is not a commercial-use licence. No reconstructed or AI-generated iPhone geometry added; no invented prices or stock.
 
 Production source is evgeniy-release.tar.gz extracted by Dockerfile; root files are older prototype. No credentials in release.
