@@ -1,5 +1,5 @@
 # Evgeniy Apple — Trade-in and compact motion
-Source: 2d79f0e
+Source: da50a28
 
 Four-step Trade-in with target iPhone dropdown from the public catalog and target model in the Telegram draft. Compact section spacing and headings; all existing sections and merchant colors preserved. Bespoke CSS hero motion uses official iPhone 18 Pro Burgundy photography, plus scroll/hover motion scenes. Assets stored locally, not hotlinked; custom CMS images preserved.
 
